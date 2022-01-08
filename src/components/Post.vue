@@ -15,7 +15,7 @@
       </p>
       <div class="button-holder">
         <button v-show="!liked" class="btn-like" v-on:click="like">Like</button>
-        <button v-show="liked" class="btn-liked">Liked</button>
+        <button v-show="liked" class="btn-liked" v-on:click="unlike">Liked</button>
         <button class="btn-share" v-on:click="showModal">Share</button>
       </div>
 
@@ -32,7 +32,7 @@ export default defineComponent({
   components: {
     ShareModal
   },
-  data  () {
+  data () {
     return {
       liked: false,
       likeAnimation: false,
@@ -62,9 +62,14 @@ export default defineComponent({
     like () {
       this.liked = !this.liked
       this.likeAnimation = true
+      this.$store.dispatch('addToLiked', this.title)
       setTimeout(() => {
         this.likeAnimation = false
       }, 800)
+    },
+    unlike () {
+      this.liked = !this.liked
+      this.$store.dispatch('removeFromLiked', this.title)
     },
     showModal () {
       this.isShareVisible = true
@@ -75,8 +80,17 @@ export default defineComponent({
     activateReadMore () {
       this.readMore = !this.readMore
     }
+  },
+  mounted () {
+    // check if post is liked already
+    const likedObject = window.localStorage.getItem('vuex')
+    if (likedObject) {
+      const liked = JSON.parse(likedObject).liked
+      this.liked = !!liked.includes(this.title)
+    }
   }
-})
+}
+)
 </script>
 
 <style scoped lang="scss">
