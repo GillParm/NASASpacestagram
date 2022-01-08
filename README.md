@@ -1,4 +1,11 @@
 # spacetagram
+## APP that shows images from NASA's APOD API
+```
+Features:
+- Like button with animation
+- Loading spinner while waiting for API data (and infinite scroll)
+- Share button with link to images
+```
 
 ## Project setup
 ```
@@ -14,11 +21,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

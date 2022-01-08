@@ -2,10 +2,17 @@
   <div class="post-container">
     <div class="image-container">
       <img class="image" loading="lazy" :src="img" :alt="title">
+      <div v-show="likeAnimation" class="lds-heart"><div></div></div>
     </div>
     <div class="text-container">
       <h3>{{ title }} - {{ date }}</h3>
       <p>{{ description }}</p>
+      <div class="button-holder">
+        <button v-show="!liked" class="btn-like" v-on:click="like">Like</button>
+        <button v-show="liked" class="btn-liked">Liked</button>
+        <button class="btn-share" v-on:click="share">Share</button>
+      </div>
+
     </div>
   </div>
 </template>
@@ -15,6 +22,12 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Post',
+  data  () {
+    return {
+      liked: false,
+      likeAnimation: false
+    }
+  },
   props: {
     img: {
       type: String,
@@ -31,6 +44,22 @@ export default defineComponent({
     date: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    like () {
+      this.liked = !this.liked
+      this.likeAnimation = true
+      setTimeout(() => {
+        this.likeAnimation = false
+      }, 600)
+    },
+    share () {
+      console.log('share')
+      navigator.clipboard.writeText(this.img)
+        .then(() => {
+          alert('Image URL copied to clipboard')
+        })
     }
   }
 })
@@ -49,6 +78,7 @@ export default defineComponent({
 .image-container {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 .image {
@@ -66,4 +96,94 @@ h3 {
 p {
   font-size: 0.8rem;
 }
+.btn-like {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-width: thin;
+  border-color: lightgray;
+  margin-bottom: 15px;
+}
+.btn-liked {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #cb2025;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: white;
+  border-width: thin;
+  border-color: #cb2025;
+  margin-bottom: 15px;
+}
+.btn-share {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-width: thin;
+  border-color: lightgray;
+  margin-bottom: 15px;
+  margin-left: 10px;
+}
+//  heart from https://loading.io/css/
+.lds-heart {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  transform: rotate(45deg);
+  transform-origin: 40px 40px;
+  top: 50%;
+  left: 50%;
+  margin-top: -80px;
+  margin-left: -50px;
+}
+.lds-heart div {
+  top: 32px;
+  left: 32px;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: #ffffff;
+  animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.lds-heart div:after,
+.lds-heart div:before {
+  content: " ";
+  position: absolute;
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: #fff;
+}
+.lds-heart div:before {
+  left: -24px;
+  border-radius: 50% 0 0 50%;
+}
+.lds-heart div:after {
+  top: -24px;
+  border-radius: 50% 50% 0 0;
+}
+@keyframes lds-heart {
+  0% {
+    transform: scale(0.95);
+  }
+  5% {
+    transform: scale(1.1);
+  }
+  39% {
+    transform: scale(0.85);
+  }
+  45% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+
 </style>
