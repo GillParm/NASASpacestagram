@@ -1,4 +1,4 @@
-# spacetagram
+# Spacestagram
 ## APP that shows images from NASA's APOD API
 ```
 Features:
