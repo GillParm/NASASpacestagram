@@ -7,7 +7,12 @@
     </div>
     <div class="text-container">
       <h3>{{ title }} - {{ date }}</h3>
-      <p>{{ description }}</p>
+      <p v-if="!readMore">{{ description.slice(0, 300) }}...
+        <a class="read-more" @click="activateReadMore" href="#">read more</a>
+      </p>
+      <p v-if="readMore">{{ description }}
+        <a class="read-more" @click="activateReadMore" href="#">read less</a>
+      </p>
       <div class="button-holder">
         <button v-show="!liked" class="btn-like" v-on:click="like">Like</button>
         <button v-show="liked" class="btn-liked">Liked</button>
@@ -31,7 +36,8 @@ export default defineComponent({
     return {
       liked: false,
       likeAnimation: false,
-      isShareVisible: false
+      isShareVisible: false,
+      readMore: false
     }
   },
   props: {
@@ -65,6 +71,9 @@ export default defineComponent({
     },
     closeModal () {
       this.isShareVisible = false
+    },
+    activateReadMore () {
+      this.readMore = !this.readMore
     }
   }
 })
@@ -117,12 +126,12 @@ p {
 .btn-liked {
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: rgb(241, 124, 126);
+  background-color: rgb(255, 109, 112);
   font-size: 0.8rem;
   cursor: pointer;
   color: white;
   border-width: thin;
-  border-color: rgb(241, 124, 126);
+  border-color: rgb(255, 109, 112);
   margin-bottom: 15px;
 }
 .btn-share {
@@ -138,6 +147,10 @@ p {
     background: #000000;
     color: #FFFFFF;
   }
+}
+.read-more {
+  cursor: pointer;
+  color: grey;
 }
 //  heart from https://loading.io/css/
 .lds-heart {

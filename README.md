@@ -5,6 +5,7 @@ Features:
 - Like button with animation
 - Loading spinner while waiting for API data (and infinite scroll)
 - Share button with link to images
+- Read more or Read less buttons to show or hide full description text
 ```
 
 ## Project setup
