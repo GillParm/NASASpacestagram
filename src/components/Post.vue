@@ -1,5 +1,6 @@
 <template>
   <div class="post-container">
+    <ShareModal v-show="isShareVisible" @close="closeModal" :img="img"/>
     <div class="image-container">
       <img class="image" loading="lazy" :src="img" :alt="title">
       <div v-show="likeAnimation" class="lds-heart"><div></div></div>
@@ -10,7 +11,7 @@
       <div class="button-holder">
         <button v-show="!liked" class="btn-like" v-on:click="like">Like</button>
         <button v-show="liked" class="btn-liked">Liked</button>
-        <button class="btn-share" v-on:click="share">Share</button>
+        <button class="btn-share" v-on:click="showModal">Share</button>
       </div>
 
     </div>
@@ -19,13 +20,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import ShareModal from './ShareModal.vue'
 
 export default defineComponent({
   name: 'Post',
+  components: {
+    ShareModal
+  },
   data  () {
     return {
       liked: false,
-      likeAnimation: false
+      likeAnimation: false,
+      isShareVisible: false
     }
   },
   props: {
@@ -52,14 +58,13 @@ export default defineComponent({
       this.likeAnimation = true
       setTimeout(() => {
         this.likeAnimation = false
-      }, 600)
+      }, 800)
     },
-    share () {
-      console.log('share')
-      navigator.clipboard.writeText(this.img)
-        .then(() => {
-          alert('Image URL copied to clipboard')
-        })
+    showModal () {
+      this.isShareVisible = true
+    },
+    closeModal () {
+      this.isShareVisible = false
     }
   }
 })
@@ -104,16 +109,20 @@ p {
   border-width: thin;
   border-color: lightgray;
   margin-bottom: 15px;
+  &:hover {
+    background: #000000;
+    color: #FFFFFF;
+  }
 }
 .btn-liked {
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: #cb2025;
+  background-color: rgb(241, 124, 126);
   font-size: 0.8rem;
   cursor: pointer;
   color: white;
   border-width: thin;
-  border-color: #cb2025;
+  border-color: rgb(241, 124, 126);
   margin-bottom: 15px;
 }
 .btn-share {
@@ -125,6 +134,10 @@ p {
   border-color: lightgray;
   margin-bottom: 15px;
   margin-left: 10px;
+  &:hover {
+    background: #000000;
+    color: #FFFFFF;
+  }
 }
 //  heart from https://loading.io/css/
 .lds-heart {
