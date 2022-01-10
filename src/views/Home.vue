@@ -112,9 +112,8 @@ h1 {
   width: 50px;
   position: absolute;
   top: 50%;
-  left: 50%;
   margin-top: -50px;
-  margin-left: -50px;
+
 }
 
 .loader:before,
