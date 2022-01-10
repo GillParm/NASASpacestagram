@@ -7,11 +7,11 @@
     </div>
     <div class="text-container">
       <h3>{{ title }} - {{ date }}</h3>
-      <p v-if="!readMore">{{ description.slice(0, 300) }}...
-        <a class="read-more" @click="activateReadMore" href="#">read more</a>
+      <p v-show="!readMore">{{ description.slice(0, 300) }}...
+        <a class="read-more" @click.prevent="activateReadMore" href="#">read more</a>
       </p>
-      <p v-if="readMore">{{ description }}
-        <a class="read-more" @click="activateReadMore" href="#">read less</a>
+      <p v-show="readMore">{{ description }}
+        <a class="read-more" @click.prevent="activateReadMore" href="#">read less</a>
       </p>
       <div class="button-holder">
         <button v-show="!liked" class="btn-like" v-on:click="like">Like</button>
