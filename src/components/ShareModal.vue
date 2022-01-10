@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { Notyf } from 'notyf'
+import 'notyf/notyf.min.css'
 export default {
   name: 'ShareModal',
   methods: {
@@ -36,10 +38,18 @@ export default {
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     share () {
-      console.log('share')
+      const notyf = new Notyf(
+        {
+          ripple: true,
+          position: {
+            x: 'center',
+            y: 'top'
+          }
+        }
+      )
       navigator.clipboard.writeText(this.img)
         .then(() => {
-          alert('Image URL copied to clipboard')
+          notyf.success('Image URL copied to clipboard')
         })
     }
   },
@@ -47,6 +57,12 @@ export default {
     img: {
       type: String,
       required: true
+    }
+  },
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  data () {
+    return {
+      notyf: new Notyf()
     }
   }
 }

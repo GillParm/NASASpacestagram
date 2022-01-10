@@ -1,6 +1,6 @@
 <template>
   <div class="post-container">
-    <ShareModal v-show="isShareVisible" @close="closeModal" :img="img"/>
+    <ShareModal class="share-modal" v-show="isShareVisible" @close="closeModal" :img="img"/>
     <div class="image-container">
       <img class="image" loading="lazy" :src="img" :alt="title">
       <div v-show="likeAnimation" class="lds-heart"><div></div></div>
@@ -94,6 +94,9 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.share-modal{
+  z-index: 10;
+}
 .post-container {
   display: flex;
   flex-direction: column;
@@ -105,6 +108,7 @@ export default defineComponent({
 }
 .image-container {
   width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -169,14 +173,14 @@ p {
 //  heart from https://loading.io/css/
 .lds-heart {
   display: inline-block;
-  position: relative;
+  position: absolute;
   width: 80px;
   height: 80px;
   transform: rotate(45deg);
   transform-origin: 40px 40px;
   top: 50%;
   left: 50%;
-  margin-top: -80px;
+  margin-top: -50px;
   margin-left: -50px;
 }
 .lds-heart div {
@@ -185,7 +189,7 @@ p {
   position: absolute;
   width: 32px;
   height: 32px;
-  background: #ffffff;
+  background: #ff6464;
   animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 .lds-heart div:after,
@@ -195,7 +199,7 @@ p {
   display: block;
   width: 32px;
   height: 32px;
-  background: #fff;
+  background: #ff6464;
 }
 .lds-heart div:before {
   left: -24px;
