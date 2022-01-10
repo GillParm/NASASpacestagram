@@ -10,6 +10,7 @@
             :title="img.title"
             :description="img.explanation"
             :date="img.date"
+            :mediatype="img.media_type"
       />
       <div class="loader2"></div>
     </div>

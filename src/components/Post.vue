@@ -1,8 +1,9 @@
 <template>
-  <div class="post-container">
+  <div class="post-container" ref="postContainer">
     <ShareModal class="share-modal" v-show="isShareVisible" @close="closeModal" :img="img"/>
     <div class="image-container">
-      <img class="image" loading="lazy" :src="img" :alt="title">
+      <iframe v-if="mediatype === 'video'" :src="img" ></iframe>
+      <img v-if="mediatype === 'image'" class="image" loading="lazy" :src="img" :alt="title">
       <div v-show="likeAnimation" class="lds-heart"><div></div></div>
     </div>
     <div class="text-container">
@@ -54,6 +55,10 @@ export default defineComponent({
       required: true
     },
     date: {
+      type: String,
+      required: true
+    },
+    mediatype: {
       type: String,
       required: true
     }
