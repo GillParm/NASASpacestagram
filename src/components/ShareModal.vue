@@ -51,6 +51,7 @@ export default {
         .then(() => {
           notyf.success('Image URL copied to clipboard')
         })
+      this.close()
     }
   },
   props: {
