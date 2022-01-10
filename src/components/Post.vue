@@ -1,5 +1,5 @@
 <template>
-  <div class="post-container" ref="postContainer">
+  <div class="post-container">
     <ShareModal class="share-modal" v-show="isShareVisible" @close="closeModal" :img="img"/>
     <div class="image-container">
       <iframe v-if="mediatype === 'video'" :src="img" ></iframe>
